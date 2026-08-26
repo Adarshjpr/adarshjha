@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Adarsh Jha — Resume</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{ --ink:#000; --rule:#000; --s:1.14; }
+  *{box-sizing:border-box}
+  body{margin:0;background:#6f757c;font-family:"Source Serif 4",Cambria,Georgia,serif;color:var(--ink)}
+
+  .bar{position:sticky;top:0;z-index:20;background:#1b1f24;color:#fff;padding:10px 16px;
+       display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-family:"Source Sans 3",sans-serif;font-size:14px}
+  .bar b{font-weight:700;margin-right:auto}
+  .bar button{background:#fff;color:#111;border:0;border-radius:6px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer}
+  .bar button.ghost{background:transparent;color:#fff;border:1px solid #4a525c}
+  .bar button:focus-visible,[contenteditable]:focus{outline:2px solid #2f7df6;outline-offset:2px}
+  .fitwrap{display:flex;align-items:center;gap:8px;font-size:12px;color:#c8ced5}
+  .fitwrap input{accent-color:#fff}
+  .hint{color:#9aa3ad;font-size:12px;width:100%}
+  .warn{color:#ffcf6b}
+
+  .page{width:210mm;height:297mm;margin:18px auto;background:#fff;overflow:hidden;
+        padding:8.5mm 9mm;box-shadow:0 6px 30px rgba(0,0,0,.35);
+        display:flex;flex-direction:column}
+
+  .name{text-align:center;font-size:calc(var(--s)*25px);font-weight:700;margin:0;line-height:1.1}
+  .name em{font-style:normal;font-weight:400}
+  .loc{text-align:center;font-size:calc(var(--s)*9.3px);font-weight:600;margin:2px 0 5px}
+  .links{display:flex;justify-content:space-between;font-size:calc(var(--s)*9.3px);
+         padding:0 4mm 4px;border-bottom:1px solid var(--rule);margin-bottom:5px}
+  .links a{color:#0b5cab;text-decoration:underline}
+
+  .cols{display:grid;grid-template-columns:1fr 1fr;column-gap:6.5mm;flex:1;align-content:start}
+  .col{display:flex;flex-direction:column}
+
+  h2{font-family:"Source Sans 3",sans-serif;font-size:calc(var(--s)*12px);font-weight:700;
+     margin:0 0 3px;padding-bottom:2px;border-bottom:1.4px solid var(--rule)}
+  section{margin-bottom:calc(var(--s)*8px)}
+  section:last-child{margin-bottom:0}
+
+  p,li,.skill{font-size:calc(var(--s)*8.4px);line-height:1.35;margin:0 0 3px;text-align:justify}
+  ul{margin:0;padding-left:calc(var(--s)*11px)}
+  li{margin-bottom:calc(var(--s)*2.5px)}
+  li::marker{font-size:.8em}
+  b,strong{font-weight:700}
+
+  .org{font-family:"Source Sans 3",sans-serif;font-weight:700;font-size:calc(var(--s)*10.5px);
+       border-bottom:1px dotted #000;margin:4px 0 2px;padding-bottom:1px}
+  .rowline{display:flex;justify-content:space-between;font-size:calc(var(--s)*8.8px);
+           font-weight:700;gap:6px;margin-bottom:2px}
+  .rowline b{font-style:italic}
+  .subhead{font-family:"Source Sans 3",sans-serif;font-weight:700;
+           font-size:calc(var(--s)*9px);margin:calc(var(--s)*4px) 0 2px}
+  .subhead a{font-weight:600;font-size:.92em}
+
+  .edu-row{display:flex;justify-content:space-between;font-size:calc(var(--s)*9.2px);
+           font-weight:700;gap:6px;margin-bottom:1px}
+  .edu-sub{display:flex;justify-content:space-between;font-size:calc(var(--s)*8.7px);
+           font-weight:700;color:#1a3a6b;margin-bottom:3px}
+
+  .stack{font-style:italic}
+  .plink{color:#0b5cab;text-decoration:underline;font-weight:600}
+  .todo{background:#ffe9a8;border-radius:2px;padding:0 2px}
+  .capturing .todo{background:transparent !important;padding:0 !important}
+
+  @media print{
+    .bar{display:none}
+    body{background:#fff}
+    .page{margin:0 !important;box-shadow:none !important;
+          width:210mm !important;height:297mm !important;padding:8.5mm 9mm !important}
+    .cols{grid-template-columns:1fr 1fr !important}
+    .links{flex-wrap:nowrap !important;justify-content:space-between !important}
+    .todo{background:transparent !important}
+    @page{size:A4;margin:0}
+  }
+  @media (max-width:820px){
+    .page:not(.capturing){width:100%;height:auto;padding:16px}
+    .page:not(.capturing) .cols{grid-template-columns:1fr}
+    .page:not(.capturing) .links{flex-wrap:wrap;gap:8px;justify-content:center}
+  }
+
+  .page.capturing{
+    width:210mm !important; height:297mm !important;
+    padding:8.5mm 9mm !important; margin:0 !important;
+    box-shadow:none !important; overflow:hidden !important;
+  }
+  .page.capturing .cols{grid-template-columns:1fr 1fr !important; column-gap:6.5mm !important}
+  .page.capturing .links{flex-wrap:nowrap !important; justify-content:space-between !important; gap:0 !important}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <b>Resume editor</b>
+  <span class="fitwrap">
+    <label><input type="checkbox" id="autofit"> Auto-fit</label>
+    <input type="range" id="scale" min="0.78" max="1.35" step="0.01" value="1.14">
+    <span id="pct">114%</span>
+    <span id="overflow" class="warn"></span>
+  </span>
+  <button onclick="editLinks()">Set links</button>
+  <button onclick="downloadPDF()">Download PDF</button>
+  <button class="ghost" onclick="downloadPNG()">Download PNG</button>
+  <button class="ghost" onclick="saveDraft()">Save</button>
+  <button class="ghost" onclick="resetDraft()">Reset</button>
+  <span class="hint">Fixed at 114%. If a warning appears next to the percentage, content is spilling past the page — trim some text or nudge the slider down.</span>
+</div>
+
+<div class="page" id="page">
+<div id="doc" contenteditable="true" spellcheck="false" style="display:flex;flex-direction:column;flex:1">
+
+  <h1 class="name">Adarsh <em>Jha</em></h1>
+  <div class="loc">Noida, Uttar Pradesh</div>
+  <div class="links">
+    <span>✉ <a href="mailto:imaadarshjha@gmail.com">imaadarshjha@gmail.com</a></span>
+    <span>✆ (+91) 9911054495</span>
+    <span><a class="todo" href="https://www.linkedin.com/in/adarsh-jpr/" data-link="linkedin">LinkedIn</a></span>
+    <span><a class="todo" href="https://github.com/Adarshjpr" data-link="github">GitHub</a></span>
+    <span><a class="todo" href="#" data-link="portfolio">Portfolio</a></span>
+  </div>
+
+  <div class="cols">
+
+    <!-- ================= LEFT ================= -->
+    <div class="col">
+      <section>
+        <h2>Summary</h2>
+        <p>Full Stack Developer with 3+ years in production, currently leading a 15-developer team at Uncodemy. Comfortable owning a feature from database schema to deployed container: I've scaled a platform to 500K visitors, pushed 100K emails a day through a queue, and taken freelance clients from first call to live site on my own VPS. Java and Spring Boot on the backend, React on the front, AWS underneath.</p>
+      </section>
+
+      <section>
+        <h2>Experience</h2>
+
+        <div class="org">Uncodemy</div>
+        <div class="rowline"><b>Lead Full Stack Web Developer</b><span>Aug 2023 – Present, Noida, UP</span></div>
+
+        <div class="subhead">Team Leadership</div>
+        <ul>
+          <li>Lead a team of <b>15+ developers</b>, owning sprint planning, code review, technical decisions and release sign-off across the company's product line.</li>
+          <li>Mentor juniors on backend architecture and deployment practice, and act as the escalation point for production incidents.</li>
+        </ul>
+
+        <div class="subhead">Main Institute Website — <a class="plink" href="https://uncodemy.com" data-link="uncodemy">uncodemy.com</a></div>
+        <ul>
+          <li>Own the company's primary revenue-driving website end to end, from feature work to on-call support, serving roughly <b>500K visitors</b>.</li>
+          <li>Re-architected the hosting setup on <b>AWS EC2</b> with <b>CloudFront</b> caching, measurably reducing monthly infrastructure spend while improving load times.</li>
+          <li>Replaced manual releases with a <b>GitHub Actions</b> pipeline into Dockerised containers behind <b>Nginx</b> — since reused as the deployment standard on every project below.</li>
+        </ul>
+
+        <div class="subhead">Internal Lead &amp; Student Management Portal</div>
+        <ul>
+          <li>Built the company's internal operations portal on <b>Spring Boot</b> and <b>MySQL</b>, replacing scattered spreadsheets with one system the counselling, accounts and academic teams all work from.</li>
+          <li>Covers the full student lifecycle: enquiry capture and lead assignment, registration, user and role management, batch and class attendance tracking, and a fee ledger showing paid, pending and overdue instalments per student.</li>
+          <li>Wired the payment ledger into automated email — receipts on payment, scheduled reminders before instalments fall due — so follow-up no longer depends on someone remembering.</li>
+          <li>Restricted financial records to accounts staff using <b>Spring Security</b> role hierarchies.</li>
+        </ul>
+
+        <div class="subhead">Certificate Portal — <a class="plink" href="https://certificate.uncodemy.com/" data-link="certificate">link</a></div>
+        <ul>
+          <li>Shipped a self-service portal generating and issuing course certificates on demand, cutting the admin team out of a repetitive request loop.</li>
+        </ul>
+
+        <div class="subhead">Online Compiler Platform — <a class="plink" href="https://uncodemy.com/online-java-compiler" data-link="certificate">link</a></div>
+        <ul>
+          <li>Engineered a browser-based compiler executing <b>Java, JavaScript, Python and C++</b>, with isolated per-submission runtime containers.</li>
+          <li>Solved the concurrency problem using a <b>Redis</b>-backed <b>BullMQ</b> queue, so heavy compile jobs run asynchronously instead of blocking the request thread.</li>
+        </ul>
+
+        <div class="subhead">Bulk Email &amp; Notification System</div>
+        <ul>
+          <li>Scaled outbound delivery to roughly <b>100K emails per day</b> through <b>Amazon SES</b>, covering reminders, alerts and transactional mail.</li>
+          <li>Tuned <b>25+ concurrent workers</b> with retry and backoff handling, keeping throughput high without tripping provider rate limits or bounce thresholds.</li>
+        </ul>
+
+        <div class="subhead">Learning Management System — In Progress</div>
+        <ul>
+          <li>Currently architecting the platform's LMS, modelling course, batch, student and administrative workflows in <b>MySQL</b> via <b>Spring Data JPA</b>, with live classroom updates over <b>WebSocket</b>.</li>
+        </ul>
+      </section>
+
+     
+    </div>
+
+    <!-- ================= RIGHT ================= -->
+    <div class="col">
+      <section>
+        <h2>Personal Projects</h2>
+        <ul>
+          <li><b>YouTube Clone</b> <span class="stack">— React, Redux, Axios · Vercel</span>
+          <a class="plink" href="https://youtube-clone-psi-henna.vercel.app/" data-link="youtube">Live</a><br>
+          A video browsing interface with a responsive home feed, category filters, live search, and a watch page carrying the player, description and suggested-videos rail. Everything shared across routes — the active query, selected category, watch history and saved list — lives in a single <b>Redux</b> store with typed actions and reducers, so navigating away and back never loses context. Async fetches handle their own loading and error states.</li>
+
+          <li><b>Task Management Dashboard</b> <span class="stack">— React, React Router, REST API · Vercel</span>
+          <a class="plink" href="https://user-task-management-dashboard.vercel.app/" data-link="task">Live</a><br>
+          A team board for moving work through stages: drag tasks between columns, set priority and due dates, assign owners and review activity history. State is lifted into a shared parent so the board, filters and summary panel stay in sync without a prop-drilling mess.</li>
+
+          <li><b>EduPath — Course Recommendation Platform</b> <span class="stack">— React, Java · Netlify</span>
+          <a class="plink" href="https://stupendous-griffin-68b3c9.netlify.app" data-link="edupath">Live</a><br>
+          Students browse subjects and get told what to learn next. The frontend was a deliberate exercise in React fundamentals: component composition, hooks for state and side effects, conditional and keyed list rendering, controlled form inputs and client-side routing. Recommendation logic sits in <b>Java</b> on the backend.</li>
+
+          <li><b>Gnest Academy Website</b> <span class="stack">— Freelance · VPS, Nginx, SSL</span>
+          <a class="plink todo" href="#" data-link="gnest">Live</a><br>
+          A paid client engagement delivered solo, from the first requirements call through to handover. Covers course listings, database-backed enquiry forms and an admin panel the client updates themselves without touching code. I also handled the parts developers usually hand off — provisioning the <b>VPS</b>, configuring <b>Nginx</b>, pointing the domain's DNS and installing SSL.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Technical Skills</h2>
+        <div class="skill"><b>Front End:</b> HTML5, CSS3, JavaScript, TypeScript, React.js, Redux, Bootstrap, Tailwind CSS.</div>
+        <div class="skill"><b>Back End:</b> Java, Node.js, Express.js.</div>
+        <div class="skill"><b>Frameworks &amp; ORM:</b> Spring, Spring Boot, Spring MVC, Spring Security, Spring Data JPA, Hibernate, Spring Cloud.</div>
+        <div class="skill"><b>AI Integration:</b> OpenAI ChatGPT, Google Gemini, Anthropic Claude, Deepgram APIs.</div>
+        <div class="skill"><b>Database:</b> MySQL, MongoDB, PostgreSQL, AWS RDS, DynamoDB, MySQL Workbench.</div>
+        <div class="skill"><b>Cloud &amp; AWS:</b> EC2, S3, CloudFront, Route 53, Lambda, Elastic Beanstalk, RDS, DynamoDB, VPC, Security Groups, CloudWatch, SES.</div>
+        <div class="skill"><b>DevOps &amp; CI/CD:</b> Docker, Docker Compose, Kubernetes, Jenkins, GitHub Actions, Nginx.</div>
+        <div class="skill"><b>Caching &amp; Queues:</b> Redis, BullMQ.</div>
+        <div class="skill"><b>Hosting:</b> Hostinger VPS, Vercel, Netlify, Render, Railway.</div>
+        <div class="skill"><b>Domain &amp; Security:</b> GoDaddy, DNS configuration, SSL/TLS, HTTPS.</div>
+      </section>
+
+      <section>
+        <h2>Awards</h2>
+        <ul>
+          <li><b>Best Employee Award</b> — for performance and project ownership in the workplace.</li>
+          <li><b>Appreciation Letter</b> — for leading the institute's core website launch.</li>
+          <li><b>Event Management Award</b> — for organising and running Technomeals.</li>
+        </ul>
+      </section>
+       <section>
+        <h2>Education</h2>
+        <!-- <div class="edu-row"><span>INDIRA GANDHI NATIONAL OPEN UNIVERSITY</span><span>2022 – 2025</span></div> -->
+        <div class="edu-sub"><span>Bachelor of Computer Applications (BCA)</span><span>CGPA: 6.0/10</span></div>
+        <p><b>Relevant Coursework:</b> Data Structures and Algorithms, Object-Oriented Programming, Database Management Systems, Operating Systems, Computer Networks, Software Engineering, Java Programming, Cloud Computing.</p>
+      </section>
+    </div>
+  </div>
+</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+  const page = document.getElementById('page');
+  const doc  = document.getElementById('doc');
+  const auto = document.getElementById('autofit');
+  const slider = document.getElementById('scale');
+  const pct  = document.getElementById('pct');
+  const warn = document.getElementById('overflow');
+  const KEY  = 'adarsh-resume-v5';
+  const DEFAULT_SCALE = 1.14;
+
+  const saved = localStorage.getItem(KEY);
+  if (saved) doc.innerHTML = saved;
+
+  const LINK_FIELDS = [
+    ['linkedin',    'LinkedIn profile URL'],
+    ['github',      'GitHub profile URL'],
+    ['portfolio',   'Portfolio URL'],
+    ['gnest',       'Gnest Academy — live URL'],
+    ['youtube',     'YouTube Clone — live URL'],
+    ['task',        'Task Management Dashboard — live URL'],
+    ['edupath',     'EduPath — live URL'],
+    ['uncodemy',    'Uncodemy main site URL'],
+    ['certificate', 'Certificate portal URL']
+  ];
+
+  function editLinks(){
+    LINK_FIELDS.forEach(([key, label]) => {
+      const el = doc.querySelector('[data-link="'+key+'"]');
+      if (!el) return;
+      const current = el.getAttribute('href') === '#' ? '' : el.getAttribute('href');
+      const val = prompt(label + '\n\nLeave blank to keep as is. Type "-" to clear.', current);
+      if (val === null) return;
+      const v = val.trim();
+      if (v === '-'){ el.setAttribute('href','#'); el.classList.add('todo'); return; }
+      if (!v) return;
+      el.setAttribute('href', /^https?:\/\//i.test(v) ? v : 'https://' + v);
+      el.classList.remove('todo');
+    });
+    checkOverflow(); saveDraft();
+  }
+
+  function setScale(s){
+    s = Math.min(1.35, Math.max(0.78, s));
+    document.documentElement.style.setProperty('--s', s.toFixed(3));
+    slider.value = s;
+    pct.textContent = Math.round(s*100) + '%';
+    checkOverflow();
+  }
+
+  /* warn when content spills past the printable A4 area */
+  function checkOverflow(){
+    const limit = page.classList.contains('capturing')
+      ? (297*96/25.4) - (2*8.5*96/25.4) - 2
+      : page.clientHeight - 2;
+    const over = doc.scrollHeight - limit;
+    warn.textContent = over > 2 ? '⚠ content overflows by ~' + Math.round(over) + 'px' : '';
+  }
+
+  function autoFit(){
+    let lo = 0.78, hi = 1.35, best = 0.78;
+    const limit = page.classList.contains('capturing')
+      ? (297*96/25.4) - (2*8.5*96/25.4) - 2
+      : page.clientHeight - 2;
+    for (let i = 0; i < 18; i++){
+      const mid = (lo + hi) / 2;
+      document.documentElement.style.setProperty('--s', mid.toFixed(3));
+      if (doc.scrollHeight <= limit){ best = mid; lo = mid; } else { hi = mid; }
+    }
+    setScale(best);
+  }
+
+  auto.addEventListener('change', () => {
+    slider.disabled = auto.checked;
+    if (auto.checked) autoFit(); else setScale(DEFAULT_SCALE);
+  });
+  slider.addEventListener('input', e => {
+    auto.checked = false; slider.disabled = false;
+    setScale(parseFloat(e.target.value));
+  });
+
+  let t;
+  doc.addEventListener('input', () => {
+    if (auto.checked) autoFit(); else checkOverflow();
+    clearTimeout(t); t = setTimeout(saveDraft, 800);
+  });
+
+  setScale(DEFAULT_SCALE);
+  window.addEventListener('load', checkOverflow);
+  document.fonts.ready.then(checkOverflow);
+
+  function saveDraft(){ localStorage.setItem(KEY, doc.innerHTML); flash('Saved'); }
+  function resetDraft(){
+    if (!confirm('Reset removes your edits and reloads the original resume. Continue?')) return;
+    localStorage.removeItem(KEY); location.reload();
+  }
+  function flash(msg){
+    const n=document.createElement('div');n.textContent=msg;
+    n.style.cssText='position:fixed;bottom:18px;right:18px;background:#1b1f24;color:#fff;padding:8px 14px;border-radius:6px;font-size:13px;font-family:sans-serif;z-index:50';
+    document.body.appendChild(n);setTimeout(()=>n.remove(),1300);
+  }
+  doc.addEventListener('paste', e => {
+    e.preventDefault();
+    document.execCommand('insertText', false, (e.clipboardData||window.clipboardData).getData('text'));
+  });
+
+  const MM = 96/25.4, A4_W = Math.round(210*MM), A4_H = Math.round(297*MM);
+
+  async function capture(){
+    doc.setAttribute('contenteditable','false');
+    if (document.activeElement) document.activeElement.blur();
+    const prevScroll = window.scrollY;
+    const prevScale = getComputedStyle(document.documentElement).getPropertyValue('--s');
+    page.classList.add('capturing');
+    window.scrollTo(0,0);
+    if (auto.checked) autoFit();
+    await document.fonts.ready;
+    await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+    try{
+      return await html2canvas(page, {
+        scale:3, backgroundColor:'#ffffff', useCORS:true,
+        width:A4_W, height:A4_H, windowWidth:A4_W, windowHeight:A4_H,
+        scrollX:0, scrollY:0,
+        onclone: (cd) => {
+          cd.getElementById('page').classList.add('capturing');
+          cd.documentElement.style.setProperty('--s', prevScale || String(DEFAULT_SCALE));
+          const d = cd.getElementById('doc');
+          if (d) d.setAttribute('contenteditable','false');
+        }
+      });
+    } finally {
+      page.classList.remove('capturing');
+      doc.setAttribute('contenteditable','true');
+      window.scrollTo(0, prevScroll);
+      checkOverflow();
+    }
+  }
+
+  async function downloadPDF(){
+    flash('Building PDF…');
+    try{
+      const canvas = await capture();
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF({ unit:'mm', format:'a4', orientation:'portrait', compress:true });
+      pdf.addImage(canvas.toDataURL('image/jpeg', 0.98), 'JPEG', 0, 0, 210, 297);
+
+      const box = page.getBoundingClientRect();
+      doc.querySelectorAll('a[href]').forEach(a => {
+        const href = a.getAttribute('href');
+        if (!href || href === '#') return;
+        const r = a.getBoundingClientRect();
+        pdf.link((r.left-box.left)/MM, (r.top-box.top)/MM, r.width/MM, r.height/MM, { url: href });
+      });
+
+      pdf.save('Adarsh-Jha-Resume.pdf');
+      flash('PDF downloaded');
+    }catch(err){ console.error(err); flash('Falling back to print'); window.print(); }
+  }
+
+  async function downloadPNG(){
+    flash('Building image…');
+    try{
+      const canvas = await capture();
+      const a = document.createElement('a');
+      a.download = 'Adarsh-Jha-Resume.png';
+      a.href = canvas.toDataURL('image/png'); a.click();
+      flash('PNG downloaded');
+    }catch(err){ console.error(err); flash('Image capture failed'); }
+  }
+</script>
+</body>
+</html>
