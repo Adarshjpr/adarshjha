@@ -415,7 +415,7 @@ footer{text-align:center;color:var(--ink-3);font-size:12.5px;padding:22px 0 4px}
     <p style="font-size:15.5px;color:var(--ink-2)">Open to full-stack roles and freelance builds. Fastest way to reach me is email.</p>
     <div class="contact">
       <a class="btn primary" href="mailto:imaadarshjha@gmail.com"><svg class="ic ic-sm" viewBox="0 0 24 24"><use href="#i-mail"/></svg> imaadarshjha@gmail.com</a>
-      <a class="btn" href="tel:+919911054495"><svg class="ic ic-sm" viewBox="0 0 24 24"><use href="#i-phone"/></svg> +91 99110 54495</a>
+      <a class="btn" href="tel:+918920861303"><svg class="ic ic-sm" viewBox="0 0 24 24"><use href="#i-phone"/></svg> +91 89208 61303</a>
       <a class="btn" href="https://www.linkedin.com/in/adarsh-jpr/" target="_blank" rel="noopener"><svg class="ic ic-sm" viewBox="0 0 24 24"><use href="#i-linkedin"/></svg> LinkedIn</a>
       <a class="btn" href="https://github.com/Adarshjpr" target="_blank" rel="noopener"><svg class="ic ic-sm" viewBox="0 0 24 24"><use href="#i-github"/></svg> GitHub</a>
       <button class="btn" id="resumeBtn"><svg class="ic ic-sm" viewBox="0 0 24 24"><use href="#i-download"/></svg> Download Resume</button>
@@ -577,20 +577,63 @@ function saveAs(href, name){
 }
 $('#resumeBtn').onclick = async () => {
   const name = 'Adarsh-Jha-Resume.pdf';
-  if (RESUME_FILE) {
-    try {
-      const r = await fetch(RESUME_FILE, {cache:'no-store'});
-      if (r.ok && (r.headers.get('content-type')||'').includes('pdf')) {
-        const url = URL.createObjectURL(await r.blob());
-        saveAs(url, name); setTimeout(() => URL.revokeObjectURL(url), 5000); return;
-      }
-    } catch(e){ /* file:// ya 404 — neeche embedded use hoga */ }
-  }
-  const saved = (() => { try { return localStorage.getItem('resume'); } catch(e){ return null; } })();
-  const url = URL.createObjectURL(saved ? b64ToBlob(saved,'application/pdf') : b64ToBlob(RESUME_B64,'application/pdf'));
-  saveAs(url, name); setTimeout(() => URL.revokeObjectURL(url), 5000);
-};
+  const btn = $('#resumeBtn');
+  const originalHTML = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '<svg class="ic ic-sm" viewBox="0 0 24 24"><use href="#i-download"/></svg> Downloading...';
 
+  function b64ToBlob(b64, type){
+    const bin = atob(b64), buf = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) buf[i] = bin.charCodeAt(i);
+    return new Blob([buf], {type});
+  }
+
+  function triggerDownload(href, filename){
+    const a = document.createElement('a');
+    a.href = href;
+    a.download = filename;
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  }
+
+  try {
+    // 1) Pehle RESUME_FILE path se try karo (agar file saath me rakhi hai)
+    if (RESUME_FILE) {
+      try {
+        const res = await fetch(RESUME_FILE, { cache: 'no-store' });
+        const ct = (res.headers.get('content-type') || '').toLowerCase();
+        const looksLikePdf = res.ok && (ct.includes('pdf') || RESUME_FILE.toLowerCase().endsWith('.pdf'));
+        if (looksLikePdf) {
+          const blob = await res.blob();
+          const url = URL.createObjectURL(blob);
+          triggerDownload(url, name);
+          setTimeout(() => URL.revokeObjectURL(url), 5000);
+          return;
+        }
+      } catch (err) {
+        console.warn('RESUME_FILE fetch fail, embedded PDF pe fallback ho raha hai:', err);
+      }
+    }
+
+    // 2) Setup panel se koi resume save kiya ho to wo use karo, warna embedded RESUME_B64
+    const savedB64 = (() => {
+      try { return localStorage.getItem('resume'); } catch (e) { return null; }
+    })();
+    const blob = b64ToBlob(savedB64 || RESUME_B64, 'application/pdf');
+    const url = URL.createObjectURL(blob);
+    triggerDownload(url, name);
+    setTimeout(() => URL.revokeObjectURL(url), 5000);
+
+  } catch (err) {
+    console.error('Resume download failed:', err);
+    alert('Resume download nahi ho paya. Thodi der baad try karo ya email par contact karo.');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = originalHTML;
+  }
+};
 /* ---- SETUP PANEL (Ctrl + Shift + E) ----
    Tum apni photo / resume drop karke turant preview dekh sakte ho, aur wahi se
    ready-made code line copy kar ke file me paste kar sakte ho. */
